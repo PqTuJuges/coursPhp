@@ -1,21 +1,26 @@
 <?php
-    $journal = [
-    'INFO Démarrage du service',
-    'INFO Connexion utilisateur',
-    'ERROR Échec de connexion à la base de données',
-    'INFO Tentative de reconnexion',
-    'INFO Service arrêté'
+    $texteOriginal = "Élévation du niveau d'été";
+    $correspondances = [
+    'é' => 'e',
+    'è' => 'e',
+    'ê' => 'e',
+    'à' => 'a',
+    'â' => 'a',
+    'î' => 'i',
+    'ô' => 'o',
+    'ù' => 'u',
+    'É' => 'E'
 ];
-    foreach($journal as $message){
-        $info = substr($message, 0, 4);
-        $error = substr($message, 0, 5);
-        var_dump($error);
-        if($info == "INFO"){
-            continue;
-        }
-        if($error == "ERROR"){
-            echo "Erreur détectée dans le journal : $message";
-            break;
-        }
+$texteNettoye = "";
+$nbcara = mb_strlen($texteOriginal);
+for($i = 0; $i < $nbcara; $i++){
+    $caract = mb_substr($texteOriginal,$i,1);
+
+    if(array_key_exists($caract,$correspondances)){
+        $texteNettoye .= $correspondances[$caract]; 
+    }else{
+        $texteNettoye .= $caract;
     }
+}
+echo "Texte nettoyé : $texteNettoye" . PHP_EOL;
 ?>
